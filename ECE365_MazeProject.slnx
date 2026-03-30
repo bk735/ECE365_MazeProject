@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="ECE365_MazeProject.vcxproj" />
+  <Project Path="ECE365_MazeProject.vcxproj" Id="e90f7043-b038-4541-aa14-1828b80179cf" />
 </Solution>
