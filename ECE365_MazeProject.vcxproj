@@ -25,6 +25,9 @@
     <ClCompile Include="pathTraversal.cpp" />
     <ClCompile Include="point2d.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="header.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
