@@ -1,0 +1,10 @@
+###Team Discussion###
+###This is like a local chat for important updates ###
+###Before any development, always remember to git pull and then push the desired changes to prevent any diverging branches###
+
+
+Author : Aryaman Gupta
+I am working on the Point2D task and as well as creating the header file. 
+The class signatures for Point2D have been self verified according to my use case. 
+As for the other class signatures, I'm adding a vague idea of the structure,variables and functions for you 
+guys to further build upon. If any changes are required depending on your logic, do let me know and i'll make the needed changes accordingly.
