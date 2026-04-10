@@ -19,12 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="maze2d.h" />
-    <ClInclude Include="path1d.h" />
-    <ClInclude Include="pathTraversal.h" />
-    <ClInclude Include="point2d.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="maze2d.cpp" />
     <ClCompile Include="path1d.cpp" />

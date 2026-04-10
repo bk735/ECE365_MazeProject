@@ -15,20 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="point2d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="maze2d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="path1d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pathTraversal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="point2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
