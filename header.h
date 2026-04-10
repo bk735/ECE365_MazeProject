@@ -3,7 +3,7 @@
 #include <iostream>
 
 //Author Aryaman Gupta
-//writing header file for point2d.cpp
+//writing signatures in header file for point2d.cpp
 class Point2D{
     private: 
         int x, y;
@@ -20,7 +20,7 @@ class Point2D{
         void setX(int x); //void type as it will return nothing
         void setY(int y);
 
-        bool operator==(const &Point2D other) const;
+        bool operator==(const Point2D& other) const; //operator == overloading for point2d objects
 
 };
 
