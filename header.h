@@ -19,7 +19,7 @@ class Point2D{
         //setter function for X & Y coord
         void setX(int x); //void type as it will return nothing
         void setY(int y);
-        bool operator==(const Point2D& other) const; //operator == overloading for point2d objects
+        bool operator==(const Point2D &other) const; //operator == overloading for point2d objects
 };
 
 
@@ -30,10 +30,10 @@ class Maze2D{
         int size; // N --> maze size NxN
     public:
         Maze2D(); //default constructor
-        Maze2D(const std::string& filename); //to load maze from file
+        Maze2D(const std::string &filename); //to load maze from file
         bool isValidMaze() const; //reads and checks the loaded file, false if any discrepancies
         void displayMaze() const;//for printing 
-		void saveMaze(const std::string& filename) const; //to save the maze to a file
+		void saveMaze(const std::string &filename) const; //to save the maze to a file
         int getSize() const; //returns N
         int getCell(int x, int y) const; // returns value of cell(0,1) whether it is accessible in path traversal or not
         bool isValidCell(int x, int y) const; //valid if cell in NxN matrix bounds and has value 1
@@ -46,10 +46,10 @@ class Path1D{
         
     public:
         Path1D(); //default constructor
-        Path1D(const std::string& filename); //to load path file
+        Path1D(const std::string &filename); //to load path file
         bool isValidPath() const; //to check for any discrepancies: only [0,1,2,3,4] steps are allowed AND 0 should only be followed by zeros
         void displayPath() const; //printing number-->direction of the step (eg: 1-->Up)
-		void savePath(const std::string& filename) const; //to save the path to a file
+		void savePath(const std::string &filename) const; //to save the path to a file
         int getNumSteps() const; //total entries in path list
         int getStep(int index) const; //eg: get_step(0) returns say 1(up)ie. the first value in the loaded path, then get_step(1) for the second value and so on. 
 
@@ -65,7 +65,7 @@ class PathTraversal{
 		std::vector<Point2D> path_points; //to store the points traversed in the path
     public:
         PathTraversal();
-        PathTraversal(const std::string& mazeFile, const std::string& pathFile); //loads both maze and path file
+        PathTraversal(const std::string &mazeFile, const std::string &pathFile); //loads both maze and path file
         bool traverse(); /* run valid_maze() → if false, print error
                              run valid_path() → if false, print error, stop
                              walk step by step using point, checking as you go */

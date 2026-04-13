@@ -4,7 +4,7 @@
 
 Path1D::Path1D() {} //initially path is empty 
 
-Path1D::Path1D(const std::string& filename) {
+Path1D::Path1D(const std::string &filename) {
 	std::ifstream file(filename);
 	if (!file) {
 		throw std::runtime_error("cannot open file there is some error ");

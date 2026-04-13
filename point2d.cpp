@@ -32,6 +32,7 @@ void Point2D::setY(int y_coord) {
 }
 
 //operator overloading
-bool Point2D::operator==(const Point2D& other) const {
+bool Point2D::operator==(const Point2D &other) const {
     return (x == other.x && y == other.y);
 }
+
