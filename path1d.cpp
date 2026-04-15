@@ -40,7 +40,7 @@ void Path1D::displayPath() const {
 
 	for (int step : steps) {
 		if (step >= 0 && step <= 4) {
-			std::cout << directions[step] << std::endl; //print the corresponding direction for each step]
+			std::cout << directions[step] << " "; //print the corresponding direction for each step]
 		}
 	}
 
@@ -54,7 +54,7 @@ void Path1D::savePath(const std::string& filename) const {
 	}
 
 	for (int step : steps) {
-		file << step << std::endl; //write each step to the file on a new line
+		file << step <<" "; //write each step to the file on a new line
 	}
 	file.close(); //close the file after writing
 
