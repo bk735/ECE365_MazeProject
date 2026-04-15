@@ -35,4 +35,39 @@ bool Path1D::isValidPath() const {
 }
 // now to display the path according to the step values
 
+void Path1D::displayPath() const {
+	std::vector<std::string> directions = { "End", "Up", "Right", "Down", "Left" };
+
+	for (int step : steps) {
+		if (step >= 0 && step <= 4) {
+			std::cout << directions[step] << std::endl; //print the corresponding direction for each step]
+		}
+	}
+
+	std::cout << std::endl; 
+}
+
+void Path1D::savePath(const std::string& filename) const {
+	std::ofstream file(filename);
+	if (!file) {
+		throw std::runtime_error("cannot open file there is some error ");
+	}
+
+	for (int step : steps) {
+		file << step << std::endl; //write each step to the file on a new line
+	}
+	file.close(); //close the file after writing
+
+}
+
+int Path1D::getNumSteps() const {
+	return steps.size(); // to return total number of steps
+}
+
+int Path1D::getStep(int index) const {
+	if (index < 0 || index >= steps.size()) {
+		throw std::out_of_range("index out of range"); //check for valid index
+	}
+	return steps[index]; //to return steps at the given index
+}
 
