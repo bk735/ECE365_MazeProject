@@ -3,7 +3,7 @@
 #include <stdexcept> 
 #include <sstream>
 
-Maze2D::Maze2D() {}
+Maze2D::Maze2D(): size(0) {}
 
 Maze2D::Maze2D(const std::string& filename) {
 	std::ifstream file(filename);
@@ -27,7 +27,7 @@ Maze2D::Maze2D(const std::string& filename) {
 		}
 	}
 
-	file.close();
+	
 
 	size = grid.size();
 
@@ -108,7 +108,7 @@ int Maze2D::getSize() const {
 }
 
 int Maze2D::getCell(int x, int y) const {
-	return grid[y][x];
+	return grid[x][y];
 }
 
 bool Maze2D::isValidCell(int x, int y) const {
@@ -116,7 +116,7 @@ bool Maze2D::isValidCell(int x, int y) const {
 		return false;
 	}
 
-	if (grid[y][x] == 1) {
+	if (grid[x][y] == 1) {
 		return true;
 	}
 
