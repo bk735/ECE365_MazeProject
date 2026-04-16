@@ -2,6 +2,7 @@
 #include <fstream> 
 #include <stdexcept> 
 #include <sstream>
+#include <vector>
 
 Maze2D::Maze2D(): size(0) {}
 
