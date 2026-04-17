@@ -1,8 +1,6 @@
 #include "header.h" //to work with path traversal class
 #include <iostream>
 #include <vector>
-#include <cstddef>
-#include <iterator>
 
 PathTraversal::PathTraversal() {
 	maze = nullptr; // no maze is loaded at beginning
@@ -23,27 +21,28 @@ bool PathTraversal::traverse() {
 		return false; //stop traversal if either is not loaded
 	}
 
-	if (!(maze->isValidMaze()) || !(path->isValidPath())) { //check if maze or path or both are valid
-		std::cout << "Error: Invalid " << (!(maze->isValidMaze()) && !(path->isValidPath()) ? "Maze and Path" : (!(maze->isValidMaze()) ? "Maze" : "Path")) << std::endl;
-		return false; //stop traversal if maze or path or both are invalid
-	}
+	
 
 	path_points.clear(); //clear any previous path points
 	point.setX(0);
 	point.setY(0); //reset starting point to (0,0)
 
 	if (!(maze->isValidCell(point.getX(), point.getY()))) { //check if starting point is valid
-		std::cout << "Error: Starting point (0,0) is not accessible (must be 1)." << std::endl;
+		std::cout << "-E-: The top left entry of the maze MUST be 1." << std::endl;
 		return false; //stop traversal if starting point is not valid
 	}
 
 	path_points.push_back(point); //add starting point to path points
+
+	int steps_taken = 0; //to keep track of the number of steps taken
 
 	for (int i = 0; i < path->getNumSteps(); i++) { //iterate through each step in the path
 		int step = path->getStep(i); //get the current step
 
 		int currX = point.getX();
 		int currY = point.getY();
+
+		steps_taken++; //increment steps taken
 
 		switch (step) { //update point coordinates based on the step direction
 		case 1: // Up
@@ -59,9 +58,14 @@ bool PathTraversal::traverse() {
 			currY -= 1;
 			break;
 		case 0: // End of path
+			if (!(point.getX() == maze->getSize() - 1 && point.getY() == maze->getSize() - 1)) {
+				std::cout << "-I-: Invalid path. Reached end of path after "
+					<< steps_taken - 1
+					<< " steps, but not reached the end of the maze yet!" << std::endl;
+				return false; //stop traversal if end of path is reached but exit is not reached
+			}
 			break;
 		default:
-			std::cout << "Error: Invalid step value " << step << " at index " << i << ". Only values [0,1,2,3,4] are allowed." << std::endl;
 			return false; //stop traversal if invalid step value is found
 		}
 
@@ -69,8 +73,31 @@ bool PathTraversal::traverse() {
 			break;
 		}
 
+		if (currX < 0) {
+			std::cout << "-E-: Invalid path, taking it beyond the top edge of the maze after "
+				<< steps_taken << " steps." << std::endl;
+			return false;
+		}
+		if (currX >= maze->getSize()) {
+			std::cout << "-E-: Invalid path, taking it beyond the bottom edge of the maze after "
+				<< steps_taken << " steps." << std::endl;
+			return false;
+		}
+		if (currY < 0) {
+			std::cout << "-E-: Invalid path, taking it beyond the left edge of the maze after "
+				<< steps_taken << " steps." << std::endl;
+			return false;
+		}
+		if (currY >= maze->getSize()) {
+			std::cout << "-E-: Invalid path, taking it beyond the right edge of the maze after "
+				<< steps_taken << " steps." << std::endl;
+			return false;
+		}
+
 		if (!maze->isValidCell(currX, currY)) { //check if the new point is valid after the move
-			std::cout << "Error: Step " << i << " leads to an invalid cell (" << currX << ", " << currY << ")" << std::endl;
+			std::cout << "-E-: Invalid path, visits an illegal cell ("
+				<< currX << ", " << currY
+				<< ") of the maze (origin being at top-left corner)." << std::endl;
 			return false; //stop traversal if an invalid cell is reached
 		}
 
@@ -79,21 +106,35 @@ bool PathTraversal::traverse() {
 		for (const auto& p : path_points) //check if new point has already been visited
 		{
 			if (p == newPoint) {
-				std::cout << "Error: Step " << i << " leads to a previously visited cell (" << currX << ", " << currY << ")." << std::endl;
+				std::cout << "-E-: Invalid path, revisits a traversed path at coordinates ("
+					<< currX << ", " << currY
+					<< ") (origin being at top-left corner)." << std::endl;
 				return false;
 			}
 		}
 
 		point = newPoint; //update current point to the new point
 		path_points.push_back(point); //add the new point to the path points
+		if (point.getX() == maze->getSize() - 1 && point.getY() == maze->getSize() - 1) {
+			if (i != path->getNumSteps() - 1 && path->getStep(i + 1) != 0) {
+				std::cout << "-I-: Invalid path. Reached end of maze after "
+					<< steps_taken
+					<< " steps, but path not complete yet!" << std::endl;
+				return false;
+			}
+		}
 	}
+	
 
 	if (point.getX() == maze->getSize() - 1 && point.getY() == maze->getSize() - 1) { //check if the final point is the exit (N-1, N-1)
-		std::cout << "Success: Path traversal completed successfully and reached the exit!" << std::endl;
+		std::cout << "-I-: Path traversal completed successfully in "
+			<< steps_taken << " steps." << std::endl;
 		return true; //traversal successful
 	}
 	else {
-		std::cout << "Error: Path traversal completed but did not reach the exit. Final position: (" << point.getX() << ", " << point.getY() << ")" << std::endl;
+		std::cout << "-I-: Invalid path. Reached end of path after "
+			<< steps_taken
+			<< " steps, but not reached the end of the maze yet!" << std::endl;
 		return false; //traversal completed but did not reach exit
 	}
 
