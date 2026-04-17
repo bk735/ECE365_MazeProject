@@ -22,14 +22,14 @@ bool PathTraversal::traverse() {
 		std::cout << "Error: " << (maze == nullptr && path == nullptr ? "Maze and Path" : (maze == nullptr ? "Maze" : "Path")) << " not loaded!" << std::endl;//print specific error message for maze, path or both not loaded
 		return false; //stop traversal if either is not loaded
 	}
-	
+
 	if (!(maze->isValidMaze()) || !(path->isValidPath())) { //check if maze or path or both are valid
 		std::cout << "Error: Invalid " << (!(maze->isValidMaze()) && !(path->isValidPath()) ? "Maze and Path" : (!(maze->isValidMaze()) ? "Maze" : "Path")) << std::endl;
 		return false; //stop traversal if maze or path or both are invalid
 	}
 
 	path_points.clear(); //clear any previous path points
-	point.setX(0); 
+	point.setX(0);
 	point.setY(0); //reset starting point to (0,0)
 
 	if (!(maze->isValidCell(point.getX(), point.getY()))) { //check if starting point is valid
@@ -46,24 +46,27 @@ bool PathTraversal::traverse() {
 		int currY = point.getY();
 
 		switch (step) { //update point coordinates based on the step direction
-			case 1: // Up
-				currX -= 1;
-				break;
-			case 2: // Right
-				currY += 1;
-				break;
-			case 3: // Down
-				currX += 1;
-				break;
-			case 4: // Left
-				currY -= 1;
-				break;
-			case 0: // End of path
-				std::cout << "Successfully reached the end of the path. Marker at: " << i << std::endl;
-				return true; //successfully reached end of path
-			default:
-				std::cout << "Error: Invalid step value " << step << " at index " << i << ". Only values [0,1,2,3,4] are allowed." << std::endl;
-				return false; //stop traversal if invalid step value is found
+		case 1: // Up
+			currX -= 1;
+			break;
+		case 2: // Right
+			currY += 1;
+			break;
+		case 3: // Down
+			currX += 1;
+			break;
+		case 4: // Left
+			currY -= 1;
+			break;
+		case 0: // End of path
+			break;
+		default:
+			std::cout << "Error: Invalid step value " << step << " at index " << i << ". Only values [0,1,2,3,4] are allowed." << std::endl;
+			return false; //stop traversal if invalid step value is found
+		}
+
+		if (step == 0) { //if end of path is reached, stop traversal
+			break;
 		}
 
 		if (!maze->isValidCell(currX, currY)) { //check if the new point is valid after the move
@@ -71,13 +74,34 @@ bool PathTraversal::traverse() {
 			return false; //stop traversal if an invalid cell is reached
 		}
 
-		point.setX(currX); //update point's X coordinate
-		point.setY(currY); //update point's Y coordinate
-		path_points.push_back(point); //add the new valid point to the path points
+		Point2D newPoint(currX, currY); //create a new point with the updated coordinates
+
+		for (const auto& p : path_points) //check if new point has already been visited
+		{
+			if (p == newPoint) {
+				std::cout << "Error: Step " << i << " leads to a previously visited cell (" << currX << ", " << currY << ")." << std::endl;
+				return false;
+			}
+		}
+
+		point = newPoint; //update current point to the new point
+		path_points.push_back(point); //add the new point to the path points
 	}
-	return true; //successfully traversed the entire path without errors
+
+	if (point.getX() == maze->getSize() - 1 && point.getY() == maze->getSize() - 1) { //check if the final point is the exit (N-1, N-1)
+		std::cout << "Success: Path traversal completed successfully and reached the exit!" << std::endl;
+		return true; //traversal successful
+	}
+	else {
+		std::cout << "Error: Path traversal completed but did not reach the exit. Final position: (" << point.getX() << ", " << point.getY() << ")" << std::endl;
+		return false; //traversal completed but did not reach exit
+	}
+
 }
 
+
+
+		
 void PathTraversal::displayResult() const {
 	if (path_points.empty()) {
 		std::cout << "No path points to display." << std::endl;
