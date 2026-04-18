@@ -5,6 +5,7 @@
 #include <string>
 
 
+void cleanFileRow(std::string &line);
 
 //writing signatures in header file for point2d.cpp
 class Point2D{
@@ -73,4 +74,5 @@ class PathTraversal{
 		~PathTraversal(); //destructor to free memory allocated for maze and path
 
 };
+
 #endif

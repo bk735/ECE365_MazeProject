@@ -4,21 +4,6 @@
 #include <sstream> //for string stream to read values from file
 #include <algorithm> 
 
-//to handle user friendliness
-void cleanFileRow(std::string &line) {
-    //convert commas to spaces
-    std::replace(line.begin(), line.end(), ',', ' ');
-
-    size_t hashPos = line.find("#"); //strip out standard comments (like # or //)
-    if (hashPos != std::string::npos) {
-        line = line.substr(0, hashPos);
-    }
-
-    size_t slashPos = line.find("//");
-    if (slashPos != std::string::npos) {
-        line = line.substr(0, slashPos);
-    }
-}
 
 Path1D::Path1D() {} //initially path is empty 
 
@@ -100,11 +85,11 @@ void Path1D::savePath(const std::string& filename) const {
 }
 
 int Path1D::getNumSteps() const {
-	return steps.size(); // to return total number of steps
+	return (int)steps.size(); // to return total number of steps
 }
 
 int Path1D::getStep(int index) const {
-	if (index < 0 || index >= steps.size()) {
+	if (index < 0 || index >= (int)steps.size()) {
 		throw std::out_of_range("index out of range"); //check for valid index
 	}
 	return steps[index]; //to return steps at the given index

@@ -64,8 +64,8 @@ bool Maze2D::isValidMaze() const {
 		return false;
 	}
 
-	int rows = grid.size();
-	int cols = grid[0].size();
+	int rows = (int)grid.size();
+	int cols = (int)grid[0].size();
 
 	for (int r = 0; r < rows; ++r) {
 		// Check if the row length matches the maze height
@@ -74,7 +74,7 @@ bool Maze2D::isValidMaze() const {
 		}
 
 		// Check every cell in the row for valid numbers
-		for (int c = 0; c < grid[r].size(); ++c) {
+		for (int c = 0; c < (int)grid[r].size(); ++c) {
 			int cellValue = grid[r][c];
 
 			if (cellValue != 0 && cellValue != 1) {
