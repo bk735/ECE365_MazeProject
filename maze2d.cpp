@@ -80,7 +80,7 @@ bool Maze2D::isValidMaze() const {
 void Maze2D::displayMaze() const {
 	for (int r = 0; r < size; ++r) {
 		for (int c = 0; c < size; ++c) {
-			std::cout << grid[r][c] << " ";
+			std::cout << grid[r][c] << "\t";
 		}
 		std::cout << std::endl;
 	}
