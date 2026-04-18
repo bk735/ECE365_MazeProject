@@ -2,7 +2,23 @@
 #include <fstream> //for file handling
 #include <stdexcept> //not necessary but i am using it to check for file opening errors
 #include <sstream> //for string stream to read values from file
-#include <algorithm> //for std::replace to replace commas with spaces
+#include <algorithm> 
+
+//to handle user friendliness
+void cleanFileRow(std::string &line) {
+    //convert commas to spaces
+    std::replace(line.begin(), line.end(), ',', ' ');
+
+    size_t hashPos = line.find("#"); //strip out standard comments (like # or //)
+    if (hashPos != std::string::npos) {
+        line = line.substr(0, hashPos);
+    }
+
+    size_t slashPos = line.find("//");
+    if (slashPos != std::string::npos) {
+        line = line.substr(0, slashPos);
+    }
+}
 
 Path1D::Path1D() {} //initially path is empty 
 
@@ -16,7 +32,7 @@ Path1D::Path1D(const std::string &filename) {
 	bool path_read = false; //flag to check if any path data is read from the file
 
 	while (std::getline(file, line)) {
-	std::replace(line.begin(), line.end(), ',', ' ');
+	cleanFileRow(line);
 	
 		std::stringstream ss(line);
 		std::vector<int> temp;

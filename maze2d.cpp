@@ -5,6 +5,21 @@
 #include <vector>
 #include <algorithm>
 
+//to handle user friendliness
+void cleanFileRow(std::string &line) {
+    //convert commas to spaces
+    std::replace(line.begin(), line.end(), ',', ' ');
+
+    size_t hashPos = line.find("#"); //strip out standard comments (like # or //)
+    if (hashPos != std::string::npos) {
+        line = line.substr(0, hashPos);
+    }
+
+    size_t slashPos = line.find("//");
+    if (slashPos != std::string::npos) {
+        line = line.substr(0, slashPos);
+    }
+}
 Maze2D::Maze2D(): size(0) {}
 
 Maze2D::Maze2D(const std::string& filename) {
@@ -15,7 +30,7 @@ Maze2D::Maze2D(const std::string& filename) {
 
 	std::string line;
 	while (std::getline(file, line)) {
-	std::replace(line.begin(), line.end(), ',', ' ');
+	cleanFileRow(line);
 		std::vector<int> row;
 		std::stringstream ss(line);
 
@@ -30,7 +45,6 @@ Maze2D::Maze2D(const std::string& filename) {
 		}
 	}
 
-	
 
 	size = grid.size();
 
@@ -41,7 +55,6 @@ Maze2D::Maze2D(const std::string& filename) {
 	if (grid[0][0] != 1) {
 		throw std::runtime_error("-E-: The top left entry of the maze MUST be 1.");
 	}
-	
 	// The validation check belongs HERE in the constructor!
 	
 }
