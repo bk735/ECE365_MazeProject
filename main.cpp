@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 
 		
 	catch (const std::exception& e) { //catch any exceptions thrown during the traversal process
-		std::cout << "An error occurred: " << e.what() << std::endl; //print the error message from the exception
+		std::cout << e.what() << std::endl; //print the error message from the exception
 		return 1; //return a non-zero value to indicate an error occurred
 	}
 	return 0; //return 0 to indicate successful execution of the program

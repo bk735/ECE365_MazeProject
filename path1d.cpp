@@ -62,6 +62,7 @@ void Path1D::displayPath() const {
 
 	for (int step : steps) {
 		if (step >= 0 && step <= 4) {
+			if (step == 0) break;
 			std::cout << directions[step] << " "; //print the corresponding direction for each step]
 		}
 	}

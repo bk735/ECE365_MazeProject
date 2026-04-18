@@ -93,7 +93,7 @@ bool PathTraversal::traverse() {
 
 		if (!maze->isValidCell(currX, currY)) { //check if the new point is valid after the move
 			std::cout << "-E-: Invalid path, visits an illegal cell ("
-				<< currX << ", " << currY
+				<< currY << ", " << currX
 				<< ") of the maze (origin being at top-left corner)." << std::endl;
 			return false; //stop traversal if an invalid cell is reached
 		}
@@ -104,7 +104,7 @@ bool PathTraversal::traverse() {
 		{
 			if (p == newPoint) {
 				std::cout << "-E-: Invalid path, revisits a traversed path at coordinates ("
-					<< currX << ", " << currY
+					<< currY << ", " << currX
 					<< ") (origin being at top-left corner)." << std::endl;
 				return false;
 			}
