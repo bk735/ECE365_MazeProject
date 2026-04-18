@@ -20,6 +20,10 @@ bool PathTraversal::traverse() {
 		std::cout << "Error: " << (maze == nullptr && path == nullptr ? "Maze and Path" : (maze == nullptr ? "Maze" : "Path")) << " not loaded!" << std::endl;//print specific error message for maze, path or both not loaded
 		return false; //stop traversal if either is not loaded
 	}
+	maze->displayMaze(); //display the loaded maze
+	std::cout << std::endl; //add a line break for better readability
+	path->displayPath(); //display the loaded path
+	std::cout << std::endl; //add a line break for better readability
 
 	
 
@@ -38,11 +42,14 @@ bool PathTraversal::traverse() {
 
 	for (int i = 0; i < path->getNumSteps(); i++) { //iterate through each step in the path
 		int step = path->getStep(i); //get the current step
+		if (step == 0) {
+			break; //if end of path is reached, stop iterating through steps
+		}
 
 		int currX = point.getX();
 		int currY = point.getY();
 
-		steps_taken++; //increment steps taken
+		
 
 		switch (step) { //update point coordinates based on the step direction
 		case 1: // Up
@@ -57,21 +64,11 @@ bool PathTraversal::traverse() {
 		case 4: // Left
 			currY -= 1;
 			break;
-		case 0: // End of path
-			if (!(point.getX() == maze->getSize() - 1 && point.getY() == maze->getSize() - 1)) {
-				std::cout << "-I-: Invalid path. Reached end of path after "
-					<< steps_taken - 1
-					<< " steps, but not reached the end of the maze yet!" << std::endl;
-				return false; //stop traversal if end of path is reached but exit is not reached
-			}
-			break;
+		
 		default:
 			return false; //stop traversal if invalid step value is found
 		}
 
-		if (step == 0) { //if end of path is reached, stop traversal
-			break;
-		}
 
 		if (currX < 0) {
 			std::cout << "-E-: Invalid path, taking it beyond the top edge of the maze after "
@@ -115,6 +112,7 @@ bool PathTraversal::traverse() {
 
 		point = newPoint; //update current point to the new point
 		path_points.push_back(point); //add the new point to the path points
+		steps_taken++; //increment the steps taken
 		if (point.getX() == maze->getSize() - 1 && point.getY() == maze->getSize() - 1) {
 			if (i != path->getNumSteps() - 1 && path->getStep(i + 1) != 0) {
 				std::cout << "-I-: Invalid path. Reached end of maze after "

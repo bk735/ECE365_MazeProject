@@ -5,7 +5,7 @@
 #include <string>
 
 
-//Author Aryaman Gupta
+
 //writing signatures in header file for point2d.cpp
 class Point2D{
     private: 

@@ -2,6 +2,7 @@
 #include <fstream> //for file handling
 #include <stdexcept> //not necessary but i am using it to check for file opening errors
 #include <sstream> //for string stream to read values from file
+#include <algorithm> //for std::replace to replace commas with spaces
 
 Path1D::Path1D() {} //initially path is empty 
 
@@ -15,6 +16,8 @@ Path1D::Path1D(const std::string &filename) {
 	bool path_read = false; //flag to check if any path data is read from the file
 
 	while (std::getline(file, line)) {
+	std::replace(line.begin(), line.end(), ',', ' ');
+	
 		std::stringstream ss(line);
 		std::vector<int> temp;
 		int value;

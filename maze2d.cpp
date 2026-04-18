@@ -3,6 +3,7 @@
 #include <stdexcept> 
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 Maze2D::Maze2D(): size(0) {}
 
@@ -14,6 +15,7 @@ Maze2D::Maze2D(const std::string& filename) {
 
 	std::string line;
 	while (std::getline(file, line)) {
+	std::replace(line.begin(), line.end(), ',', ' ');
 		std::vector<int> row;
 		std::stringstream ss(line);
 
@@ -35,11 +37,11 @@ Maze2D::Maze2D(const std::string& filename) {
 	if (size == 0) {
 		throw std::runtime_error("-E-: Error reading maze file '" + filename + "'.");
 	}
-
+	isValidMaze(); //validate the maze after reading it from the file
 	if (grid[0][0] != 1) {
 		throw std::runtime_error("-E-: The top left entry of the maze MUST be 1.");
 	}
-	isValidMaze();
+	
 	// The validation check belongs HERE in the constructor!
 	
 }
@@ -49,11 +51,12 @@ bool Maze2D::isValidMaze() const {
 		return false;
 	}
 
-	int n = grid.size();
+	int rows = grid.size();
+	int cols = grid[0].size();
 
-	for (int r = 0; r < n; ++r) {
+	for (int r = 0; r < rows; ++r) {
 		// Check if the row length matches the maze height
-		if (grid[r].size() != grid[0].size()) {
+		if (grid[r].size() != cols) {
 			throw std::runtime_error("-E-: All rows of the maze MUST have the same length.");
 		}
 
@@ -66,16 +69,12 @@ bool Maze2D::isValidMaze() const {
 			}
 		}
 	} // End of the row loop
-	if (grid.size() != grid[0].size()) {
+	if (rows!=cols) {
 		throw std::runtime_error("-E-: #rows MUST be equal to #cols.");
 	}
-
-	if (grid[0][0] != 1) {
-		throw std::runtime_error("-E-: The top left entry of the maze MUST be 1.");
-	}
-
-	// Only return true after checking EVERYTHING
 	return true;
+
+	
 }
 
 void Maze2D::displayMaze() const {
