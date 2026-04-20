@@ -1,12 +1,12 @@
 ECE365 Maze Project - Build & Run Instructions
-Environment: Windows, Visual Studio Community 2019
+Environment: Windows, Visual Studio 2019
 
-BUILD:
-1. Open Visual Studio 2019 → File → Open → Project/Solution → select ECE365_MazeProject.vcxproj
-2. Set configuration to Release|x64 (top toolbar dropdown)
-3. Press Ctrl+Shift+B to build (or Build → Build Solution)
+BUILD :
+1. Open: Start Menu → Developer Command Prompt for VS 2019
+2. cd into the folder containing the unzipped .cpp and .h files
+3. cl /EHsc /std:c++17 main.cpp maze2d.cpp path1d.cpp pathTraversal.cpp point2d.cpp /Fe:maze.exe
 
-RUN:
-4. Open Developer Command Prompt: Tools → Command Line → Developer Command Prompt
-5. cd x64\Release
-6. ECE365MazeProject.exe <maze_file> <path_file>
+RUN via test batch files:
+4. Copy maze.exe into the test\ directory (alongside the TestXX folders)
+5. cd into any testcase folder (e.g. test\Test01_NormalCase_GOOD)
+6. run.bat
